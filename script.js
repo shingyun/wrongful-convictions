@@ -9,7 +9,7 @@ var w = outerWidth - m.l - m.r,
 
 
 //Import data and parse
-d3.csv('../data/N=1984.csv',parse, dataloaded);
+d3.csv('data/N=1984.csv',parse, dataloaded);
 
 function dataloaded(err, data) {
 
