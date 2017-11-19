@@ -1,0 +1,90 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  
+}
+
+body{
+  background-color:  #272727;
+/*  background-color: gray;*/
+}
+
+
+.subtitle{
+  color: #EFF1F3;
+  margin-left: 15px; 
+}
+
+.who{
+  min-height: 600px;
+}
+
+.canvas{
+  margin: 0px;
+  padding: 0px;
+}
+
+.subtitle-wrap{
+/*  margin-left: 10px;*/
+  margin-top: 10px;
+  color: white;
+  float: left;
+}
+
+.exoneree{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #272727;
+  display: inline-block;
+  text-align: center;
+}
+
+.name{
+  color: white;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.name:hover{
+  cursor: default;
+}
+
+
+/*Timeplot*/
+
+.time {
+  min-height: 600px;
+}
+
+.timeplot{
+  width: 80%
+  margin: auto;
+}
+
+.exo-time{
+  display: inline-block;
+  transform: translate(30%,0%);
+}
+
+.exo-time-each{
+  transform: translate(0%,30%);
+   text-align: center;
+   opacity: 0.5;
+}
+
+.exo-year{
+  color: #696773;
+  font-size: 11px;
+}
+
+.timeline{
+  height: 150px;
+  width: 780px;
+  transform: translate(0%,170%);
+}
+
+
+
+
