@@ -93,7 +93,7 @@ function dataloaded(err, data) {
 
   timeline = d3.select('.timeline')
      .append('svg')
-     .attr('width','800px')
+     .attr('width','1000px')
      .attr('height','150px')
      .append('g')
      // .attr('transform','translate(50,50)')
@@ -110,7 +110,7 @@ function dataloaded(err, data) {
 
   scaleX = d3.scaleBand()
      .domain(year)
-     .range([50,700]);
+     .range([50,950]);
 
   axisX = d3.axisBottom()
      .tickValues([1950,1960,1970,1980,1990,2000,2010,2020])
@@ -129,7 +129,7 @@ function dataloaded(err, data) {
      timeline.append('circle')
          .attr('cx',scaleX(d.occurred))
          .attr('cy','50')
-         .attr('r',5)
+         .attr('r',3)
          .style('fill','#009FB7')
          .style('stroke-width','1px')
          .style('stroke','#009FB7');
@@ -138,7 +138,7 @@ function dataloaded(err, data) {
      timeline.append('circle')
          .attr('cx',scaleX(d.convicted))
          .attr('cy','50')
-         .attr('r',5)
+         .attr('r',3)
          .style('fill','#009FB7')
          .style('stroke-width','1px')
          .style('stroke','#009FB7');
@@ -147,7 +147,7 @@ function dataloaded(err, data) {
      timeline.append('circle')
          .attr('cx',scaleX(d.exonerated))
          .attr('cy','50')
-         .attr('r',5)
+         .attr('r',3)
          .style('fill','#009FB7')
          .style('stroke-width','1px')
          .style('stroke','#009FB7');
@@ -183,18 +183,22 @@ function dataloaded(err, data) {
 
      //duration1
      timeline.append('line')
-         .attr('x1',scaleX(d.occurred))
+         .attr('x1',scaleX(d.convicted))
          .attr('x2',scaleX(d.convicted))
+         .transition().duration(1000)
+         .attr('x2',scaleX(d.occurred))
          .attr('y1','50')
          .attr('y2','50')
          .style('stroke-width','2px')
          .style('stroke','#009FB7')
-         .style('stroke-dasharray', ('1, 3'));
+         .style('stroke-dasharray', ('0.5, 1'));
 
      //duration2
      timeline.append('line')
-         .attr('x1',scaleX(d.convicted))
+         .attr('x1',scaleX(d.exonerated))
          .attr('x2',scaleX(d.exonerated))
+         .transition().duration(1000)
+         .attr('x2',scaleX(d.convicted))
          .attr('y1','50')
          .attr('y2','50')
          .style('stroke-width','2px')
