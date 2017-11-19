@@ -81,18 +81,14 @@ function dataloaded(err, data) {
       .on('mouseenter',function(d){
          
          d3.selectAll('circle').remove();
-      
-        d3.selectAll('line').remove();
-
+         d3.selectAll('line').remove();
+         d3.selectAll('.notes').remove();
+         d3.selectAll('.exo-time-each').style('opacity',0.35)
          d3.select(this)
            .style('opacity',1)
          
          drawTime(d);
 
-      })
-      .on('mouseleave',function(d){
-         d3.select(this)
-           .style('opacity',0.5)
       });
 
   timeline = d3.select('.timeline')
@@ -103,9 +99,9 @@ function dataloaded(err, data) {
      // .attr('transform','translate(50,50)')
 
   year = [];
-  yInit = 1950;
+  yInit = 1949;
 
-  for(i=0; i<70; i++){
+  for(i=0; i<71; i++){
     yInit = yInit+1;
     year.push(yInit)
   }
@@ -114,10 +110,16 @@ function dataloaded(err, data) {
 
   scaleX = d3.scaleBand()
      .domain(year)
-     .range([20,750]);
+     .range([50,700]);
 
   axisX = d3.axisBottom()
+     .tickValues([1950,1960,1970,1980,1990,2000,2010,2020])
      .scale(scaleX);
+
+  //Axis X
+  timeline.append('g') 
+     .attr('transform','translate(0,100)')
+     .call(axisX);
 
 
   function drawTime(d){
@@ -126,7 +128,7 @@ function dataloaded(err, data) {
      //// year occured
      timeline.append('circle')
          .attr('cx',scaleX(d.occurred))
-         .attr('cy','10px')
+         .attr('cy','50')
          .attr('r',5)
          .style('fill','#009FB7')
          .style('stroke-width','1px')
@@ -135,7 +137,7 @@ function dataloaded(err, data) {
      //year convicted
      timeline.append('circle')
          .attr('cx',scaleX(d.convicted))
-         .attr('cy','10')
+         .attr('cy','50')
          .attr('r',5)
          .style('fill','#009FB7')
          .style('stroke-width','1px')
@@ -144,34 +146,59 @@ function dataloaded(err, data) {
      //year exonerated
      timeline.append('circle')
          .attr('cx',scaleX(d.exonerated))
-         .attr('cy','10')
+         .attr('cy','50')
          .attr('r',5)
          .style('fill','#009FB7')
          .style('stroke-width','1px')
          .style('stroke','#009FB7');
 
+     timeline.append('text')
+         .attr('class','notes')
+         .attr('x',scaleX(d.occurred))
+         .attr('y','25px')
+         .style('font-size','14')
+         .style('text-anchor','middle')
+         .style('fill','#009FB7')
+         .style('font-size','14')
+         .text('Occurred: '+d.occurred)
+
+     timeline.append('text')
+        .attr('class','notes')
+         .attr('x',scaleX(d.convicted))
+         .attr('y','40px')
+         .style('font-size','14')
+         .style('text-anchor','middle')
+         .style('fill','#009FB7')
+         .text('Convicted:'+d.convicted)
+
+     timeline.append('text')
+         .attr('class','notes')
+         .attr('x',scaleX(d.exonerated))
+         .attr('y','70px')
+         .style('font-size','14')
+         .style('text-anchor','middle')
+         .style('fill','#009FB7')
+         .text('Exonerated:'+d.exonerated)
+
+
      //duration1
      timeline.append('line')
          .attr('x1',scaleX(d.occurred))
          .attr('x2',scaleX(d.convicted))
-         .attr('y1','10')
-         .attr('y2','10')
+         .attr('y1','50')
+         .attr('y2','50')
          .style('stroke-width','2px')
-         .style('stroke','#009FB7');
+         .style('stroke','#009FB7')
+         .style('stroke-dasharray', ('1, 3'));
 
      //duration2
      timeline.append('line')
          .attr('x1',scaleX(d.convicted))
          .attr('x2',scaleX(d.exonerated))
-         .attr('y1','10')
-         .attr('y2','10')
+         .attr('y1','50')
+         .attr('y2','50')
          .style('stroke-width','2px')
          .style('stroke','#009FB7');
-
-     //Axis X
-     timeline.append('g')
-         .attr('transform','translate(0,50)')
-         .call(axisX);
   
   }
 

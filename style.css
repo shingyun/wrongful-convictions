@@ -81,7 +81,7 @@ body{
 
 .timeline{
   height: 150px;
-  width: 780px;
+  width: 60%;
   transform: translate(0%,170%);
 }
 
