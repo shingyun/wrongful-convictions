@@ -2,20 +2,21 @@
   margin: 0px;
   padding: 0px;
   position: relative;
+  font-family: 'Verdana', 'Geneva', 'sans-serif'
   
 }
 
 body{
-  background-color:  #272727;
+  background-color:  #181818;
 /*  background-color: gray;*/
 }
 
 
-.subtitle{
+/*.subtitle{
   color: #EFF1F3;
   margin-left: 15px; 
-}
-
+}*/
+/*
 .who{
   min-height: 600px;
 }
@@ -25,9 +26,9 @@ body{
   padding: 0px;
 }
 
-.subtitle-wrap{
+.subtitle-wrap{*/
 /*  margin-left: 10px;*/
-  margin-top: 10px;
+/*  margin-top: 10px;
   color: white;
   float: left;
 }
@@ -39,18 +40,51 @@ body{
   background-color: #272727;
   display: inline-block;
   text-align: center;
+}*/
+
+.cover{
+  height: 300px;
 }
 
-.name{
-  color: white;
-  margin-top: 10px;
-  text-align: center;
+.headline, .subheadline{
+  margin: 10px 0px;
+  margin-left: 30px;
 }
 
-.name:hover{
-  cursor: default;
+.headline{
+  margin-top:50px;
+  color: #C1AB42;
 }
 
+.subheadline{
+  font-size: 20px;
+  color: #c8c8c8;
+}
+
+.project-intro{
+  margin-left: 30px;
+  width: 700px;
+  color: #696773;
+  font-size: 14px;
+}
+
+.subtitle{
+  font-size: 20px;
+  color: #C1AB42;
+  width: 200px;
+}
+
+.timeplot-intro{
+  font-size: 14px;
+  color: #c8c8c8;
+  width: 700px;
+}
+
+.subtitle, .timeplot-intro{
+  margin: 10px 0px;
+  margin-left: 30px;
+  min-width: 600px;
+}
 
 /*Timeplot*/
 
@@ -59,8 +93,9 @@ body{
 }
 
 .timeplot{
-  width: 80%
+  min-width: 1000px;
   margin: auto;
+  transform: translate(1.5%,0%);
 }
 
 .exo-time{
@@ -71,7 +106,7 @@ body{
 .exo-time-each{
   transform: translate(0%,30%);
    text-align: center;
-   opacity: 0.5;
+   opacity: 0.35;
 }
 
 .exo-year{
@@ -80,11 +115,59 @@ body{
 }
 
 .timeline{
-  height: 150px;
-  width: 60%;
-  transform: translate(0%,170%);
+  height: 200px;
+  width: 50%;
+  transform: translate(0%,50%);
 }
 
+.timeline-each{
+  stroke-width: 6px;
+  stroke: #009FB7;
+}
 
+.re-line{
+  stroke: #696773;
+  stroke-width: 1px;
+  opacity: 0.8;
+}
 
+.notes, .age-notes{
+  font-size: 13px;
+  fill: #C8C8C8;
+}
 
+.axis-x path{
+  stroke: #696773;
+  opacity: 0.5;
+}
+
+.tick line{
+  stroke-width: 0px;
+}
+
+.tick text{
+  fill: #696773;
+}
+
+.info {
+  margin-left: 30px;
+  transform: translate(0%,50%);
+  width: 30%;
+}
+
+.name {
+  color: #C1AB42;
+}
+
+.tag{
+  font-size: 14px;
+  color: #696773;
+}
+
+.des{
+  width: 65%;
+  min-width: 200px;
+  word-wrap: break-word;
+  font-size: 14px;
+  color: #C8C8C8;
+}

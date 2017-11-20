@@ -1,11 +1,6 @@
 console.log('6.2');
 
-//First, append <svg> element and implement the margin convention
-var m = {t:50,r:50,b:50,l:50};
-var outerWidth = document.getElementById('canvas').clientWidth,
-    outerHeight = document.getElementById('canvas').clientHeight;
-var w = outerWidth - m.l - m.r,
-    h = outerHeight - m.t - m.b;
+var y_base = 70;
 
 
 //Import data and parse
@@ -17,46 +12,66 @@ function dataloaded(err, data) {
     return d.worstCrime == 'Murder'
   })
   
-  circle = d3.select('.canvas')
-    .selectAll('.exoneree')
-    .data(data)
-    .enter()
-    .append('div')
-    .attr('class','exoneree');
+  data.sort(function(a,b){
+    return a.age -b.age
+  })
 
-  circle
-    .on('mouseenter',function (d){
-        d3.select(this)
-          .transition().duration(700)
-          .style('background-color','#009FB7')
-          .style('width','60px')
-          .style('height','60px');
+  console.log(data)
 
-       d3.select(this)
-         .append('p')
-         .attr('class','name')
-         .html(function (d) { return d.firstName;})
-         .style('opacity',0)
-         .transition().duration(700)
-         .style('opacity',1);
+  // circle = d3.select('.canvas')
+  //   .selectAll('.exoneree')
+  //   .data(data)
+  //   .enter()
+  //   .append('div')
+  //   .attr('class','exoneree');
 
-    })
-    .on('mouseleave',function (d){
-        d3.select(this)
-          .transition().duration(500)
-          .style('background-color','#272727')
-          .style('width','30px')
-          .style('height','30px');;
+  // circle
+  //   .on('mouseenter',function (d){
+  //       d3.select(this)
+  //         .transition().duration(700)
+  //         .style('background-color','#009FB7')
+  //         .style('width','60px')
+  //         .style('height','60px');
+
+  //      d3.select(this)
+  //        .append('p')
+  //        .attr('class','name')
+  //        .html(function (d) { return d.firstName;})
+  //        .style('opacity',0)
+  //        .transition().duration(700)
+  //        .style('opacity',1);
+
+  //   })
+  //   .on('mouseleave',function (d){
+  //       d3.select(this)
+  //         .transition().duration(500)
+  //         .style('background-color','#272727')
+  //         .style('width','30px')
+  //         .style('height','30px');;
         
-        d3.select(this)
-         .select('.name')
-         .remove();
-    });
+  //       d3.select(this)
+  //        .select('.name')
+  //        .remove();
+  //   });
 
 
   time = d3.nest().key(d=> d.exonerated)
     .sortKeys(d3.ascending)
     .entries(data);
+
+  // scaleColorGender = d3.scaleOrdinal()
+  //    .domain(['Male','Female'])
+  //    .range(['#65C8E5','#F696C0'])
+
+  // dataByRace = d3.nest().key(d => d.race)
+  //    .entries(data)
+
+  // race = dataByRace.map(d => d.key);
+  
+  // scaleColorRace = d3.scaleOrdinal()
+  //    .domain(race)
+  //    .range(['#EE8171','#82F7A9','#A2B9ED','#48DADC','#d3d3d3','#F3F76E'])
+
 
   d3.select('.timeplot')
     .selectAll('.exo-time')
@@ -73,16 +88,21 @@ function dataloaded(err, data) {
       .data(function(d){return d.values})
       .enter()
       .append('div')
-      .attr('class','exo-time-each')
+      .attr('class',function(d){
+        return d.firstName+d.occurred;
+      })
+      .classed('exo-time-each',true)
       .style('width','80%')
-      .style('height','7px')
+      .style('height','6px')
       .style('background-color','#009FB7')
       .style('margin-top','2px')
       .on('mouseenter',function(d){
          
          d3.selectAll('circle').remove();
-         d3.selectAll('line').remove();
+         d3.selectAll('.timeline-each').remove();
          d3.selectAll('.notes').remove();
+         d3.selectAll('.age-notes').remove();
+         d3.selectAll('.re-line').remove();
          d3.selectAll('.exo-time-each').style('opacity',0.35)
          d3.select(this)
            .style('opacity',1)
@@ -91,10 +111,11 @@ function dataloaded(err, data) {
 
       });
 
+
   timeline = d3.select('.timeline')
      .append('svg')
      .attr('width','1000px')
-     .attr('height','150px')
+     .attr('height','200px')
      .append('g')
      // .attr('transform','translate(50,50)')
 
@@ -106,107 +127,168 @@ function dataloaded(err, data) {
     year.push(yInit)
   }
 
-  console.log(year);
 
   scaleX = d3.scaleBand()
      .domain(year)
-     .range([50,950]);
+     .range([35,890]);
 
   axisX = d3.axisBottom()
-     .tickValues([1950,1960,1970,1980,1990,2000,2010,2020])
+     .tickValues([1950,2020])
      .scale(scaleX);
-
+  
   //Axis X
   timeline.append('g') 
-     .attr('transform','translate(0,100)')
+     .attr('class','axis-x')
+     .attr('transform','translate(0,'+y_base+')')
      .call(axisX);
 
 
   function drawTime(d){
-     // console.log()
 
-     //// year occured
-     timeline.append('circle')
-         .attr('cx',scaleX(d.occurred))
-         .attr('cy','50')
-         .attr('r',3)
-         .style('fill','#009FB7')
-         .style('stroke-width','1px')
-         .style('stroke','#009FB7');
-
-     //year convicted
-     timeline.append('circle')
-         .attr('cx',scaleX(d.convicted))
-         .attr('cy','50')
-         .attr('r',3)
-         .style('fill','#009FB7')
-         .style('stroke-width','1px')
-         .style('stroke','#009FB7');
-     
-     //year exonerated
-     timeline.append('circle')
-         .attr('cx',scaleX(d.exonerated))
-         .attr('cy','50')
-         .attr('r',3)
-         .style('fill','#009FB7')
-         .style('stroke-width','1px')
-         .style('stroke','#009FB7');
-
+     //occurred text
      timeline.append('text')
          .attr('class','notes')
          .attr('x',scaleX(d.occurred))
-         .attr('y','25px')
-         .style('font-size','14')
-         .style('text-anchor','middle')
-         .style('fill','#009FB7')
-         .style('font-size','14')
-         .text('Occurred: '+d.occurred)
+         .attr('y',y_base-60)
+         .text('Occurred  '+d.occurred)
 
+     //convicted text
      timeline.append('text')
         .attr('class','notes')
          .attr('x',scaleX(d.convicted))
-         .attr('y','40px')
-         .style('font-size','14')
-         .style('text-anchor','middle')
-         .style('fill','#009FB7')
-         .text('Convicted:'+d.convicted)
+         .attr('y',y_base-45)
+         .text('Convicted  '+d.convicted)
 
+     //exonerated text
      timeline.append('text')
          .attr('class','notes')
          .attr('x',scaleX(d.exonerated))
-         .attr('y','70px')
-         .style('font-size','14')
-         .style('text-anchor','middle')
-         .style('fill','#009FB7')
-         .text('Exonerated:'+d.exonerated)
+         .attr('y',y_base-30)
+         .text('Exonerated  '+d.exonerated)
 
+     if(d.age == 0){
+      
+       timeline
+         .append('text')
+         .attr('class','age-notes')
+         .text('age unknown')
+         .attr('x',scaleX(d.occurred))
+         .attr('y',y_base+30);
+       
+       timeline.append('line')
+         .attr('class','re-line')
+         .attr('x1',scaleX(d.occurred))
+         .attr('x2',scaleX(d.occurred))
+         .attr('y1',y_base-60)
+         .attr('y2',y_base);
 
-     //duration1
+       timeline.append('line')
+         .attr('class','re-line')
+         .attr('x1',scaleX(d.convicted))
+         .attr('x2',scaleX(d.convicted))
+         .attr('y1',y_base-40)
+         .attr('y2',y_base);
+
+       timeline.append('line')
+         .attr('class','re-line')
+         .attr('x1',scaleX(d.exonerated))
+         .attr('x2',scaleX(d.exonerated))
+         .attr('y1',y_base-25)
+         .attr('y2',y_base);
+
+     } else {
+           //occurred age text
+         timeline.append('text')
+         .attr('class','age-notes')
+         .attr('x',scaleX(d.occurred))
+         .attr('y',y_base+70)
+         .text(d.age +' years old')
+
+        //convicted age text
+         timeline.append('text')
+        .attr('class','age-notes')
+         .attr('x',scaleX(d.convicted))
+         .attr('y',y_base+55)
+         .text((d.age+ (d.convicted-d.occurred))+' years old')
+
+        //exonerated age text
+        timeline.append('text')
+         .attr('class','age-notes')
+         .attr('x',scaleX(d.exonerated))
+         .attr('y',y_base+40)
+         .text((d.age+ (d.exonerated-d.convicted))+' years old')
+
+               //reference line1
+        timeline.append('line')
+         .attr('class','re-line')
+         .attr('x1',scaleX(d.occurred))
+         .attr('x2',scaleX(d.occurred))
+         .attr('y1',y_base-60)
+         .attr('y2',y_base+60);
+
+        //reference line2
+        timeline.append('line')
+         .attr('class','re-line')
+         .attr('x1',scaleX(d.convicted))
+         .attr('x2',scaleX(d.convicted))
+         .attr('y1',y_base-40)
+         .attr('y2',y_base+40);
+
+        //reference line3
+        timeline.append('line')
+         .attr('class','re-line')
+         .attr('x1',scaleX(d.exonerated))
+         .attr('x2',scaleX(d.exonerated))
+         .attr('y1',y_base-25)
+         .attr('y2',y_base+25);
+     }
+
+     //duration1 line
      timeline.append('line')
+         .attr('class','timeline-each')
+         .attr('x1',scaleX(d.occurred))
+         .attr('x2',scaleX(d.occurred))
+         .transition().duration(1000)
+         .attr('x2',scaleX(d.convicted))
+         .attr('y1','70')
+         .attr('y2','70')
+         .style('stroke-dasharray', ('1, 0.5'));
+
+     //duration2 line
+     timeline.append('line')
+         .attr('class','timeline-each')
          .attr('x1',scaleX(d.convicted))
          .attr('x2',scaleX(d.convicted))
          .transition().duration(1000)
-         .attr('x2',scaleX(d.occurred))
-         .attr('y1','50')
-         .attr('y2','50')
-         .style('stroke-width','2px')
-         .style('stroke','#009FB7')
-         .style('stroke-dasharray', ('0.5, 1'));
-
-     //duration2
-     timeline.append('line')
-         .attr('x1',scaleX(d.exonerated))
          .attr('x2',scaleX(d.exonerated))
-         .transition().duration(1000)
-         .attr('x2',scaleX(d.convicted))
-         .attr('y1','50')
-         .attr('y2','50')
-         .style('stroke-width','2px')
-         .style('stroke','#009FB7');
-  
-  }
+         .attr('y1','70')
+         .attr('y2','70');
 
+     //Exoneree Info
+     var du2 = d.exonerated - d.convicted, 
+         gender;
+
+     if(d.sex == 'Female'){
+        gender = 'her';
+     } else{
+        gender = 'his';
+     }
   
+     d3.select('.name')
+       .html(d.firstName + ' ' + d.lastName)
+     d3.select('.tag')
+       .html(d.sex + ', ' + d.race)
+     d3.select('.des')
+       .html(
+        'The crime happened in '+ d.occurred + 
+        ', and was wrongly convicted in '+ d.convicted + '. '+
+        d.firstName + ' had been waiting for '+ du2 + 
+        ' years for '+ gender +' innocence.')
+  }
+  
+  data.sort(function(a,b){return a.exonerated - b.exonerated})
+  d3.select('.David1984').style('opacity',1);
+  drawTime(data[0]);  
 
 
 
@@ -217,7 +299,7 @@ function parse(d) {
   return {
     lastName:d['Last Name'],
     firstName:d['First Name'],
-    age:d['Age'],
+    age:+d['Age'],
     race:d['Race'],
     sex:d['Sex'],
     state:d['State'],
