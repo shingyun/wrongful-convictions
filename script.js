@@ -2,6 +2,12 @@ console.log('6.2');
 
 var y_base = 70;
 
+timeline = d3.select('.timeline')
+   .append('svg')
+   .attr('width','1000px')
+   .attr('height','200px')
+   .append('g')
+
 
 //Import data and parse
 d3.csv('data/N=1984.csv',parse, dataloaded);
@@ -18,60 +24,9 @@ function dataloaded(err, data) {
 
   console.log(data)
 
-  // circle = d3.select('.canvas')
-  //   .selectAll('.exoneree')
-  //   .data(data)
-  //   .enter()
-  //   .append('div')
-  //   .attr('class','exoneree');
-
-  // circle
-  //   .on('mouseenter',function (d){
-  //       d3.select(this)
-  //         .transition().duration(700)
-  //         .style('background-color','#009FB7')
-  //         .style('width','60px')
-  //         .style('height','60px');
-
-  //      d3.select(this)
-  //        .append('p')
-  //        .attr('class','name')
-  //        .html(function (d) { return d.firstName;})
-  //        .style('opacity',0)
-  //        .transition().duration(700)
-  //        .style('opacity',1);
-
-  //   })
-  //   .on('mouseleave',function (d){
-  //       d3.select(this)
-  //         .transition().duration(500)
-  //         .style('background-color','#272727')
-  //         .style('width','30px')
-  //         .style('height','30px');;
-        
-  //       d3.select(this)
-  //        .select('.name')
-  //        .remove();
-  //   });
-
-
   time = d3.nest().key(d=> d.exonerated)
     .sortKeys(d3.ascending)
     .entries(data);
-
-  // scaleColorGender = d3.scaleOrdinal()
-  //    .domain(['Male','Female'])
-  //    .range(['#65C8E5','#F696C0'])
-
-  // dataByRace = d3.nest().key(d => d.race)
-  //    .entries(data)
-
-  // race = dataByRace.map(d => d.key);
-  
-  // scaleColorRace = d3.scaleOrdinal()
-  //    .domain(race)
-  //    .range(['#EE8171','#82F7A9','#A2B9ED','#48DADC','#d3d3d3','#F3F76E'])
-
 
   d3.select('.timeplot')
     .selectAll('.exo-time')
@@ -106,18 +61,11 @@ function dataloaded(err, data) {
          d3.selectAll('.exo-time-each').style('opacity',0.35)
          d3.select(this)
            .style('opacity',1)
-         
-         drawTime(d);
 
+         drawTime(d)
+         // TimelineForEach(d, timeline);
       });
 
-
-  timeline = d3.select('.timeline')
-     .append('svg')
-     .attr('width','1000px')
-     .attr('height','200px')
-     .append('g')
-     // .attr('transform','translate(50,50)')
 
   year = [];
   yInit = 1949;
@@ -162,6 +110,7 @@ function dataloaded(err, data) {
      //exonerated text
      timeline.append('text')
          .attr('class','notes')
+         .attr('id','note-exoneration')
          .attr('x',scaleX(d.exonerated))
          .attr('y',y_base-30)
          .text('Exonerated  '+d.exonerated)
@@ -214,11 +163,12 @@ function dataloaded(err, data) {
         //exonerated age text
         timeline.append('text')
          .attr('class','age-notes')
+         .attr('id','age-note-exoneration')
          .attr('x',scaleX(d.exonerated))
          .attr('y',y_base+40)
          .text((d.age+ (d.exonerated-d.convicted))+' years old')
 
-               //reference line1
+        //reference line1
         timeline.append('line')
          .attr('class','re-line')
          .attr('x1',scaleX(d.occurred))
@@ -237,6 +187,7 @@ function dataloaded(err, data) {
         //reference line3
         timeline.append('line')
          .attr('class','re-line')
+         .attr('id','re-exoneration')
          .attr('x1',scaleX(d.exonerated))
          .attr('x2',scaleX(d.exonerated))
          .attr('y1',y_base-25)
@@ -288,8 +239,8 @@ function dataloaded(err, data) {
   
   data.sort(function(a,b){return a.exonerated - b.exonerated})
   d3.select('.David1984').style('opacity',1);
-  drawTime(data[0]);  
-
+  // TimelineForEach(data[0],timeline);  
+  drawTime(data[0])
 
 
 }//dataloaded

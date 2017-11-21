@@ -11,37 +11,6 @@ body{
 /*  background-color: gray;*/
 }
 
-
-/*.subtitle{
-  color: #EFF1F3;
-  margin-left: 15px; 
-}*/
-/*
-.who{
-  min-height: 600px;
-}
-
-.canvas{
-  margin: 0px;
-  padding: 0px;
-}
-
-.subtitle-wrap{*/
-/*  margin-left: 10px;*/
-/*  margin-top: 10px;
-  color: white;
-  float: left;
-}
-
-.exoneree{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #272727;
-  display: inline-block;
-  text-align: center;
-}*/
-
 .cover{
   height: 300px;
 }
@@ -117,12 +86,13 @@ body{
 .timeline{
   height: 200px;
   width: 50%;
-  transform: translate(0%,50%);
+  transform: translate(0%,30%);
 }
 
 .timeline-each{
   stroke-width: 6px;
   stroke: #009FB7;
+  opacity: 0.7;
 }
 
 .re-line{
@@ -131,9 +101,18 @@ body{
   opacity: 0.8;
 }
 
+#re-exoneration{
+  stroke-width: 1.5px;
+  stroke: #009FB7;
+}
+
 .notes, .age-notes{
   font-size: 13px;
   fill: #C8C8C8;
+}
+
+#note-exoneration, #age-note-exoneration{
+  fill: #009FB7;
 }
 
 .axis-x path{
@@ -151,8 +130,16 @@ body{
 
 .info {
   margin-left: 30px;
-  transform: translate(0%,50%);
+  transform: translate(0%,10%);
   width: 30%;
+}
+
+.timeline-title{
+  width: 250px;
+  color: #C1AB42;
+  padding-bottom: 5px;
+  margin: 5px 0px;
+  border-bottom: #c8c8c8 1px solid;
 }
 
 .name {
@@ -170,4 +157,9 @@ body{
   word-wrap: break-word;
   font-size: 14px;
   color: #C8C8C8;
+}
+
+.footer{
+  margin-top: 100px;
+  margin-bottom: 50px;
 }
