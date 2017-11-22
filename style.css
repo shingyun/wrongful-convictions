@@ -8,11 +8,16 @@
 
 body{
   background-color:  #181818;
-/*  background-color: gray;*/
 }
 
-.cover{
-  height: 300px;
+
+.cover {
+  min-width: 1000px;
+  transform: translate(0.5%,0%);
+}
+
+.content1 {
+  transform: translate(20%,50%);
 }
 
 .headline, .subheadline{
@@ -21,7 +26,6 @@ body{
 }
 
 .headline{
-  margin-top:50px;
   color: #C1AB42;
 }
 
@@ -30,17 +34,64 @@ body{
   color: #c8c8c8;
 }
 
-.project-intro{
+p.project-intro1,  p.project-intro2 , .author{
   margin-left: 30px;
   width: 700px;
   color: #696773;
   font-size: 14px;
+
 }
+
+.author{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.duration{
+  width: 100%
+  height:150px;  
+}
+
+.content2 {
+  transform: translate(20%,10%);
+}
+
+.duration-plot{
+  min-width: 1000px;
+  transform: translate(3%,0%);
+}
+
+.graphic-title{
+  width: 250px;
+  color: #C1AB42;
+  padding-bottom: 5px;
+  margin: 5px 0px;
+}
+
+.durationplot-intro{
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #c8c8c8;
+  width: 700px;
+}
+
+.duration-label {
+  fill: #696773;
+  font-size: 13px;
+}
+
+
+.duration-text{
+  margin: 30px 0px;
+  font-size: 14px;
+}
+
 
 .subtitle{
   font-size: 20px;
   color: #C1AB42;
   width: 200px;
+  padding-top: 10px;
 }
 
 .timeplot-intro{
@@ -49,17 +100,13 @@ body{
   width: 700px;
 }
 
-.subtitle, .timeplot-intro{
+.subtitle, .durationplot-intro, .timeplot-intro{
   margin: 10px 0px;
-  margin-left: 30px;
+  margin-left: 35px;
   min-width: 600px;
 }
 
 /*Timeplot*/
-
-.time {
-  min-height: 600px;
-}
 
 .timeplot{
   min-width: 1000px;
@@ -95,6 +142,10 @@ body{
   opacity: 0.7;
 }
 
+#timeline-title{
+  border-bottom: #696773 1px solid;
+}
+
 .re-line{
   stroke: #696773;
   stroke-width: 1px;
@@ -115,7 +166,7 @@ body{
   fill: #009FB7;
 }
 
-.axis-x path{
+.axis path{
   stroke: #696773;
   opacity: 0.5;
 }
@@ -132,14 +183,6 @@ body{
   margin-left: 30px;
   transform: translate(0%,10%);
   width: 30%;
-}
-
-.timeline-title{
-  width: 250px;
-  color: #C1AB42;
-  padding-bottom: 5px;
-  margin: 5px 0px;
-  border-bottom: #c8c8c8 1px solid;
 }
 
 .name {
@@ -159,7 +202,30 @@ body{
   color: #C8C8C8;
 }
 
-.footer{
-  margin-top: 100px;
-  margin-bottom: 50px;
+.navigation {
+  width: 50%;
+  margin: auto;
+  color: #c8c8c8;
 }
+
+.arrow{
+  width: 0; 
+  height: 0; 
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #c8c8c8;
+}
+
+.arrow:hover {
+  cursor: pointer;
+}
+
+.nav1{
+  transform: translate(10%,1800%);
+}
+
+.nav2{
+  transform: translate(10%,500%);
+}
+
+
