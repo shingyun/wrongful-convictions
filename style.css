@@ -125,9 +125,18 @@ p.project-intro1,  p.project-intro2 , .author{
    opacity: 0.35;
 }
 
-.exo-year{
+.exo-year, .timeline-label{
   color: #696773;
+}
+
+.exo-year {
   font-size: 11px;
+}
+
+.timeline-label{
+  min-width: 1000px;
+  font-size: 13px;
+  transform: translate(1%,0%);
 }
 
 .timeline{
